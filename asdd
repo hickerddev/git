@@ -1,0 +1,117 @@
+#include <stdio.h>
+#include <conio.h>
+
+// #define N int j
+
+void kospi(int ptr1[][10], int *ptr2, int hm);
+
+void swap(int arr[100][10], int hm, int N);
+
+int main(){
+	int i,hm,se,scr=1;
+	
+	printf("인원수 : ");
+	scanf_s("%d", &hm, sizeof(hm));
+	
+	//printf("%d", hm);
+	
+
+	if(hm<2){
+		printf("올바르지 않은 입력 값\n");
+		printf("프로그램을 종료합니다. \n");
+		
+		return 0;
+	}
+	
+	int namev[hm][10], timev[hm];
+	
+	printf("이름과 수치를 입력합니다.\n");
+	printf("이름은 10글자 이내로 입력해야 합니다.\n");
+	
+	for(i=0;i<hm;i++){
+		printf("이름 입력: ");
+		scanf_s("%s", &namev[i], sizeof(namev));
+		printf("수치 입력: ");
+		scanf_s("%d", &timev[i], sizeof(timev));
+	}
+	
+	// printf("test... : %s, %d \n", namev[0], timev[0]);
+	
+	printf("결과값을 출력하는중."); 
+	printf("."); printf(".\n"); 
+	
+	kospi(namev, timev, hm);
+re:
+	printf("결과물을 확인 할 방식을 고르세요. \n"); 
+	printf("1. 내림차순 \n"); 
+	printf("2. 오름차순 \n"); 
+	printf("3. 코스피 1위 \n");
+	printf("4. 코스피 꼴찌 \n"); 
+	printf("다른 값 입력시 종료 \n");
+	printf("입력: ");
+	
+	scanf_s("%d", &se, sizeof(se));
+	
+	switch(se){
+		case 1:
+			for(i=0;i<hm;i++){
+				if(timev[i]==timev[i+1]){
+					printf("공동 %d위 달성! \n", scr);
+				}
+				printf("%d위 %s, %d시간 \n", scr, namev[i], timev[i]);
+				if(timev[i]==timev[i+1]){
+				}
+				else{
+					scr++;
+				}
+			}
+			scr=1;
+			goto re;
+		case 2:
+			for(i=hm;i>0;i--){
+				if(timev[i]==timev[i-1]){
+					printf("공동 %d위 달성! \n", i);
+				}
+				printf("%d위 %s, %d시간 \n", i, namev[i-1], timev[i-1]);
+			}
+			goto re;
+		case 3:
+			printf("축하합니다 코스피 1위는 %d시간으로 %s입니다. \n", timev[0], namev[0]);
+			goto re;
+		case 4:
+			printf("분발하세요 코스피 꼴찌는 %d시간으로 %s입니다. \n", timev[hm-1], namev[hm-1]);
+			goto re;
+		default:
+			break;
+	}
+}
+
+void kospi(int ptr1[][10], int *ptr2, int hm){
+	int i,j,k,temp1;
+	int *temp2;
+	
+	for(i=hm-1;i>0;i--){
+		for(j=0;j<i;j++){
+			if(ptr2[j]<ptr2[j+1]){
+				temp1=ptr2[j];
+				ptr2[j]=ptr2[j+1];
+				ptr2[j+1]=temp1;
+				
+				// swap(ptr1, hm, j);
+				/* temp2=ptr1[j];
+				ptr1[j]=ptr1[j+1];
+				ptr1[j+1]=temp2; */
+				// 이차원 배열의 값 또는 주소변경이 필요 
+			}
+		}
+	}
+}
+
+void swap(int arr[100][10], int hm, int N){
+	int temp1[hm][10]; int i;
+	for(i=0;i<hm;i++){
+		temp1[hm][i]=arr[hm][i];
+		arr[hm][i]=arr[hm+1][i];
+		arr[hm+1][i]=temp1[hm][i];
+	}
+}
